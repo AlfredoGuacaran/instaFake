@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini taller JWT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <style>
@@ -18,11 +21,11 @@
   <div class="container">
     <div class="row justify-content-center align-items-center p-5">
       <div class="col-md-12">
-        <h3 class="text-center">
+        <h3 class="text-center bg-light">
           InstaFake
         </h3>
       </div>
-      <div class="col-md-6 d-block">
+      <div class="col-md-6 d-block" id="div-form">
         <form id="insta-form">
           <div class="form-group">
             <label>Email address</label>
@@ -36,8 +39,14 @@
         </form>
       </div>
 
-      <div class="col-md-6 d-none">
-        FOTOS
+      <div class="col-md-6 d-none p-1" id="div-photos">
+        <div class="header d-flex justify-content-between align-items-center sticky-top bg-light p-1">
+          <h1 class="h3 fw-bold">Feed</h1>
+          <button type="button" class="btn btn-lg btn-primary fs-3" id="btn-logout">Logout</button>
+        </div>
+        <div id="feed"></div>
+        <button type=" button" class="btn btn-lg btn-primary fs-3" id="btn-addPhotos" data-currentpage=1>Show
+          more</button>
       </div>
     </div>
   </div>
