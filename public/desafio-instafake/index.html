@@ -24,7 +24,10 @@
         <h3 class="text-center bg-light">
           InstaFake
         </h3>
+        <h1 class="h1 d-none p-1" id="loading-photos">Loading photos...</h1>
+
       </div>
+
       <div class="col-md-6 d-block" id="div-form">
         <form id="insta-form">
           <div class="form-group">
@@ -39,12 +42,15 @@
         </form>
       </div>
 
+
       <div class="col-md-6 d-none p-1" id="div-photos">
         <div class="header d-flex justify-content-between align-items-center sticky-top bg-light p-1">
           <h1 class="h3 fw-bold">Feed</h1>
           <button type="button" class="btn btn-lg btn-primary fs-3" id="btn-logout">Logout</button>
         </div>
-        <div id="feed"></div>
+        <div id="feed">
+
+        </div>
         <button type=" button" class="btn btn-lg btn-primary fs-3" id="btn-addPhotos" data-currentpage=1>Show
           more</button>
       </div>

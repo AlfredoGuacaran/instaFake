@@ -1,13 +1,19 @@
 //primera llamada a api para solicitar Token
 async function getToken(email, password) {
-  const response1 = await fetch('http://localhost:3000/api/login', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const response1 = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
 
-  const { token } = await response1.json();
+    if (!response1.status) return;
 
-  return token;
+    const { token } = await response1.json();
+
+    return token;
+  } catch (error) {
+    console.log('error');
+  }
 }
 
 //Segunda peticion a api para solicitar fotos
@@ -23,16 +29,23 @@ async function getPhotos(token, page = 1) {
 
   const data2 = await response2.json();
   const photosArr = data2.data;
+
   return photosArr;
 }
 
 function domLogin() {
   $('#div-form').removeClass('d-block').addClass('d-none');
-  $('#div-photos').removeClass('d-none').addClass('d-block');
+  $('#loading-photos').removeClass('d-none').addClass('d-block');
+
+  setTimeout(function () {
+    $('#div-photos').removeClass('d-none').addClass('d-block');
+    $('#loading-photos').removeClass('d-block').addClass('d-none');
+  }, 1000);
 }
 
 function renderPhotos(photos) {
   photos = photos.slice(0, 10);
+
   const html = photos
     .map((photo) => {
       return `
@@ -63,15 +76,17 @@ $('#insta-form').on('submit', async function (event) {
     //primera llamada a api para solicitar Token
     const token = await getToken(email, password);
 
+    //en caso de que las credenciales sean invalidas
+    if (!token) return $('.form-control').addClass('is-invalid');
+
     //guarda token en localStorage
     localStorage.setItem('token', token);
-
-    //esconde el formulario muestra las fotos...
-    domLogin();
-
     //Segunda peticion a api para solicitar fotos
     const photos = await getPhotos(token);
     renderPhotos(photos);
+    domLogin();
+
+    //esconde el formulario muestra las fotos...
   } catch (error) {
     console.log('Error');
     console.error(error);
@@ -82,14 +97,15 @@ $('#insta-form').on('submit', async function (event) {
 (async function init() {
   try {
     const token = localStorage.getItem('token');
+
     if (token == null) {
       return;
     } else {
-      //esconde el formulario muestra las fotos...
-      domLogin();
       //Segunda peticion a api para solicitar fotos
       const photos = await getPhotos(token);
       renderPhotos(photos);
+      //esconde el formulario muestra las fotos...
+      domLogin();
     }
   } catch (error) {
     console.error(error);
